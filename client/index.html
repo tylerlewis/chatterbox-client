@@ -7,14 +7,33 @@
 
     <!-- dependencies -->
     <script src="bower_components/jquery/jquery.min.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+
     <!-- your scripts -->
     <script src="scripts/config.js"></script>
     <script src="scripts/app.js"></script>
   </head>
   <body>
+    <div id="topbar">
+      <div id="topcontent" style="height:32px">
+
+      </div>
+    </div>
     <div id="main">
-      <h1>chatterbox</h1>
+    <div id="topbar">
+      <div id="topcontent">
+        <input id="userName" type="text" placeholder="Username"></input>
+        <div id="addRoom">Create Room</div>
+        <div id="joinRoom">Join Room</div>
+
+      </div>
+    </div>
+      <h1>hackerbox</h1>
+      <input id="chatMessage" type="text" placeholder="Type your message"></input>
       <!-- Your HTML goes here! -->
+      <ul id="messages">
+
+      </ul>
     </div>
   </body>
 </html>
