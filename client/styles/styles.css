@@ -141,7 +141,7 @@ h1 {
     padding-top: 110px;
 }
 
-#addRoom, #joinRoom {
+#addRoom, #joinRoom, #friendBtn {
     margin-top:4px;
     font-size:12px;
     float: left;
@@ -149,4 +149,45 @@ h1 {
     background: red;
     margin-right: 10px;
     cursor: pointer;
+}
+
+#addRoom:hover, #joinRoom:hover, #friendBtn:hover {
+    background: rgb(255, 61, 61);
+}
+
+#roomName{
+    float: left;
+    margin-right: 10px;
+}
+
+.user:hover {
+    color: red  ;
+    cursor: pointer;
+}
+
+#friendBar{
+    position: fixed;
+    top: 0;
+    background: #AFBE48;
+    height: 100px;
+    padding: 10px;
+    width: 100%;
+    display: none;
+}
+
+#friendBar .friend{
+    margin-top: 45px;
+    padding: 10px;
+    background: #727C2A;
+    float: left;
+    margin-right: 10px;
+    font-size: 13px;
+}
+
+.friend {
+    color: rgb(119, 64, 64);
+}
+
+#messages li:hover {
+    background: #A1AF3E;
 }

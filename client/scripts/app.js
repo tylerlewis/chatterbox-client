@@ -13,7 +13,7 @@ app.send = function(message) {
   }).done(function(msg) { console.log(msg); });
 };
 
-app.fetch = function(firstDownload) {
+app.fetch = function(firstDownload, className) {
   $.ajax({
     url: "https://api.parse.com/1/classes/chatterbox?order=-createdAt",
     type: "GET"
@@ -23,13 +23,26 @@ app.fetch = function(firstDownload) {
     if(firstDownload) {
       var count = 0;
       var idx = 0;
-
+      console.log(className);
       while(count < 20) {
-        if(app.displayMessages(results[idx], 'firstRun')) {
-          count++;
-          idx++;
+        if(className) {
+          if(results[idx].roomname === className) {
+            if(app.displayMessages(results[idx], 'firstRun')) {
+              count++;
+              idx++;
+            } else {
+              idx++;
+            }
+          } else {
+            idx++;
+          }
         } else {
-          idx++;
+          if(app.displayMessages(results[idx], 'firstRun')) {
+            count++;
+            idx++;
+          } else {
+            idx++;
+          }
         }
       }
     } else {
@@ -61,17 +74,23 @@ app.validMessage = function(message) {
 app.displayMessages = function(currentMessage, firstRun) {
   var username = currentMessage.username;
   var message = currentMessage.text;
-  var roomname = currentMessage.roomname;
+  var roomname = currentMessage.roomname || 'onlyOnHome';
   var createdAt = currentMessage.createdAt;
   var messageObjId = currentMessage.objectId;
+  var time = new Date();
+  var timeStamp = time.getHours() + ':' + time.getMinutes() + ':' + time.getSeconds();
   $messages = $('#messages');
+
+  if(app.friends[username]) {
+    roomname = roomname + ' f      riend';
+  }
 
   if(messageObjId !== app.lastMsg) {
     if(app.validMessage(currentMessage)) {
       if(firstRun){
-        $messages.append('<li>[' + createdAt + '] ' + username + ': ' + message + '</li>');
+        $messages.append('<li class="'+ roomname +'"><b><span style="color:#727C2A" >' + timeStamp + '</span> <span class="user">' + username + '</span></b>: ' + message + '</li>');
       } else {
-        $messages.prepend('<li>[' + createdAt + '] ' + username + ': ' + message + '</li>');
+        $messages.prepend('<li class="'+ roomname +'"><b><span style="color:#727C2A">' + timeStamp + '</span> <span class="user">' + username + '</span></b>: ' + message + '</li>');
       }
       if($('#messages > li').length >= 20) {
         $('#messages > li').remove('li:gt(19)');
@@ -87,12 +106,15 @@ app.displayMessages = function(currentMessage, firstRun) {
 app.init = function() {
   app.lastMsg;
   app.userName = 'Guest';
+  app.friends = {};
 
   app.fetch(true);
-  setInterval( app.fetch , 2000 );
+  app.standardUpdate = setInterval( app.fetch , 2000 );
+  // app.standardUpdate();
 
   var $chatMessage = $('#chatMessage');
   var $userName = $('#userName');
+  var $roomName = $('#roomName');
 
   $chatMessage.on('keyup', function(e) {
     if(e.which === 13 && $chatMessage.val().trim()) {
@@ -103,6 +125,34 @@ app.init = function() {
 
   $userName.on('keyup', function(e) {
     app.userName = $userName.val();
+  });
+
+  $roomName.on('keyup', function(e) {
+    if(e.which === 13 && $roomName.val().trim()) {
+      $('#messages li').remove();
+      console.log($roomName.val().trim());
+      clearInterval(app.standardUpdate);
+      clearInterval(app.roomUpdate);
+      app.fetch(true, $roomName.val().trim());
+      app.roomUpdate = setInterval(function() { app.fetch(false, $roomName.val().trim()); }, 2000 );
+    }
+  });
+
+  $('#friendBtn').on('click', function() {
+    if($('#friendBar').css('display') === 'none') {
+      $('#friendBar').slideDown('slow');
+    } else {
+      $('#friendBar').slideUp('slow');
+    }
+    console.log('clicked');
+  });
+
+  $('#messages').on('click', '.user', function() {
+    var friendName = $(this).context.innerHTML;
+    app.friends[friendName] = friendName;
+    $('#messages li:contains("' + friendName + '")').addClass('friend');
+
+    console.log(friendName);
   });
 };
 
