@@ -1,22 +1,22 @@
 body {
-    background: #eee;
+    margin:0;
+    padding:0;
+    background: #252525;
     text-align: center;
-    padding: 0 25px;
-    font-family: arial, sans-serif;
+    font-family: helvetica, sans-serif;
+    font-size: 17px;
+    color: #fff;
+    font-weight: 100;
 }
 
 #main {
-    width: 500px;
+    width: 90%;
     margin: auto;
     text-align: left;
-    background: white;
     padding: 50px 60px;
-    border: solid #ddd;
-    border-width: 0 1px 1px 1px;
 }
 
 #main h1 {
-    margin-top: 0;
     font-size: 35px;
     margin-bottom: 5px;
     padding: 5px;
@@ -81,4 +81,113 @@ form input[type=text] {
 
 .spinner img {
     padding: 10px;
+}
+
+/* Our Styles */
+#main ul {
+    padding: 0;
+}
+
+* {
+    Box-sizing: Border-box;
+}
+
+#messages {
+    list-style-type: none;
+    background: #ABB65D;
+}
+#messages li {
+    /*background: #AFBE48;*/
+    margin:0;
+    padding-left: 0;
+    padding: 20px;
+    border-bottom: 1px solid #9BA83E;
+}
+
+#chatMessage {
+    width: 100%;
+    padding: 15px;
+    font-size: 13px;
+}
+
+#topbar {
+    top: 0;
+    position: fixed;
+    margin: 0;
+    background: #000;
+    width: 100%;
+    padding: 5px;
+    padding-left: 0;
+}
+
+#topbar #topcontent{
+    width: 90%;
+    float: left;
+}
+
+#topbar input {
+    margin-top: 4px;
+    height: 24px;
+    padding: 5px;
+    border: none;
+}
+
+#userName {
+    float: left;
+    margin-right: 10px;
+}
+
+h1 {
+    padding-top: 110px;
+}
+
+#addRoom, #joinRoom, #friendBtn {
+    margin-top:4px;
+    font-size:12px;
+    float: left;
+    padding: 5px;
+    background: red;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+#addRoom:hover, #joinRoom:hover, #friendBtn:hover {
+    background: rgb(255, 61, 61);
+}
+
+#roomName{
+    float: left;
+    margin-right: 10px;
+}
+
+.user:hover {
+    color: red  ;
+    cursor: pointer;
+}
+
+#friendBar{
+    position: fixed;
+    top: 0;
+    background: #AFBE48;
+    height: 100px;
+    padding: 10px;
+    width: 100%;
+    display: none;
+}
+
+#friendBar .friend{
+    margin-top: 45px;
+    padding: 10px;
+    background: #727C2A;
+    float: left;
+    margin-right: 10px;
+    font-size: 13px;
+}
+
+.friend {
+    color: rgb(119, 64, 64);
+}
+
+#messages li:hover {
+    background: #A1AF3E;
 }
